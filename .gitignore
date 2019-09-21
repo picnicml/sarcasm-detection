@@ -34,3 +34,5 @@ project/plugins/project/
 !lib/*.jar
 
 universal_sentence_encoder_large_v3/
+spam.csv
+dataset.csv
