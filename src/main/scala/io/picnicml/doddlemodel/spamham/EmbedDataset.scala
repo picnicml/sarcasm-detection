@@ -10,7 +10,6 @@ object EmbedDataset extends App {
   val EMBEDDINGS_DIM = 512
 
   val (sentences, y) = loadTextDataset()
-
   val model = SavedModelBundle.load("universal_sentence_encoder_large_v3", "serve")
   val embeddings = embed(sentences)
   model.session().close()
@@ -60,7 +59,7 @@ object EmbedDataset extends App {
   def saveDataset(x: Features, y: Array[Double]): Unit = {
     val writer = CSVWriter.open(args(1))
     writer.writeRow("target" :: (0 until EMBEDDINGS_DIM).toList.map(i => s"e$i"))
-    writer.writeRow("c" :: (0 until EMBEDDINGS_DIM).toList.map(_ => "n"))
+    writer.writeRow("n" :: (0 until EMBEDDINGS_DIM).toList.map(_ => "n"))
 
     (0 until x.rows).foreach { rowIndex =>
       writer.writeRow(y(rowIndex) :: x(rowIndex, ::).t.toArray.toList)
