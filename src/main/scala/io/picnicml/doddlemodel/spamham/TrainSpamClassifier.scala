@@ -15,7 +15,7 @@ import io.picnicml.doddlemodel.pipeline.Pipeline.pipe
 import io.picnicml.doddlemodel.preprocessing.StandardScaler
 import io.picnicml.doddlemodel.syntax.PredictorSyntax._
 
-object TrainClassifier extends App {
+object TrainSpamClassifier extends App {
 
   val (x, y, featureIndex) = loadData()
   val split = shuffleSplitData(x, y)
@@ -39,7 +39,7 @@ object TrainClassifier extends App {
   def shuffleSplitData(x: Features, y: Target): TrainTestSplit = {
     println("Shuffling and splitting data")
     val (xShuffled, yShuffled) = shuffleDataset(x, y)
-    val split = splitDataset(xShuffled, yShuffled, proportionTrain = 0.85)
+    val split = splitDataset(xShuffled, yShuffled, proportionTrain = 0.9)
     println(s"Training set size: ${split.xTr.rows}, test set size: ${split.xTe.rows}")
     println(s"Proportion of spam examples in training set: ${sum(split.yTr) / split.xTr.rows}")
     println(s"Proportion of spam examples in test set: ${sum(split.yTe) / split.xTe.rows}\n")
