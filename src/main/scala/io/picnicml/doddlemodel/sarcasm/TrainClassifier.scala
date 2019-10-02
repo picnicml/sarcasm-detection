@@ -1,4 +1,4 @@
-package io.picnicml.doddlemodel.spamham
+package io.picnicml.doddlemodel.sarcasm
 
 import java.io.File
 
@@ -15,7 +15,7 @@ import io.picnicml.doddlemodel.pipeline.Pipeline.pipe
 import io.picnicml.doddlemodel.preprocessing.StandardScaler
 import io.picnicml.doddlemodel.syntax.PredictorSyntax._
 
-object TrainSpamClassifier extends App {
+object TrainClassifier extends App {
 
   val (x, y, featureIndex) = loadData()
   val split = shuffleSplitData(x, y)
@@ -32,7 +32,7 @@ object TrainSpamClassifier extends App {
     println(s"Features: $featureIndex")
     println(s"Shape of the feature matrix: (${x.rows}, ${x.cols})")
     println(s"Length of the target vector: (${y.length},)")
-    println(s"Proportion of spam examples: ${sum(y) / x.rows}\n")
+    println(s"Proportion of sarcastic examples: ${sum(y) / x.rows}\n")
     (x, y, featureIndex)
   }
 
@@ -41,8 +41,8 @@ object TrainSpamClassifier extends App {
     val (xShuffled, yShuffled) = shuffleDataset(x, y)
     val split = splitDataset(xShuffled, yShuffled, proportionTrain = 0.9)
     println(s"Training set size: ${split.xTr.rows}, test set size: ${split.xTe.rows}")
-    println(s"Proportion of spam examples in training set: ${sum(split.yTr) / split.xTr.rows}")
-    println(s"Proportion of spam examples in test set: ${sum(split.yTe) / split.xTe.rows}\n")
+    println(s"Proportion of sarcastic examples in training set: ${sum(split.yTr) / split.xTr.rows}")
+    println(s"Proportion of sarcastic examples in test set: ${sum(split.yTe) / split.xTe.rows}\n")
     split
   }
 

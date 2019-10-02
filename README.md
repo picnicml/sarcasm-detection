@@ -1,7 +1,9 @@
-## SMS Spam Classification with doddle-model
-todo
+## Sarcasm Detection with Tensorflow and doddle-model
+We embed 1 million Reddit comments with a [Universal Sentence Encoder](https://arxiv.org/abs/1803.11175) and then use the encoded data to train a logistic regression classifier that detects sarcasm.
 
-steps:
-- run `save_hub_module.py`
-- download `spam.csv` from [Kaggle](https://www.kaggle.com/uciml/sms-spam-collection-dataset)
-- run `EmbedDataset.scala spam.csv dataset.csv`
+Steps:
+- download the data from from [Kaggle](https://www.kaggle.com/danofer/sarcasm) and unpack into the root of this repository (directory name is `sarcasm`)
+- run `pip install -r requirements.tx` to install Python dependencies (preferably in a virtual environment)
+- run `python save_hub_module.py` to download a pretrained universal sentence encoder model from Tensorflow Hub
+- run `sbt "runMain io.picnicml.doddlemodel.sarcasm.EmbedDataset.class sarcasm/train-balanced-sarcasm.csv sarcasm/train-balanced-sarcasm-embedded.csv"` to embed the text data
+- run `sbt "runMain io.picnicml.doddlemodel.sarcasm.TrainClassifier.class sarcasm/train-balanced-sarcasm-embedded.csv logreg.model"` to train a classifier

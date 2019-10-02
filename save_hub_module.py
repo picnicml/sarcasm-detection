@@ -2,6 +2,7 @@ import tensorflow as tf
 import tensorflow_hub as hub
 
 graph = tf.Graph()
+
 with graph.as_default():
     text_input = tf.placeholder(dtype=tf.string, shape=[None], name='text_input')
     sentence_encoder = hub.Module('https://tfhub.dev/google/universal-sentence-encoder-large/3', trainable=True)

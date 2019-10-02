@@ -1,13 +1,16 @@
-package io.picnicml.doddlemodel.spamham
+package io.picnicml.doddlemodel.sarcasm
 
-import cats.syntax.option._
+import breeze.linalg.DenseMatrix
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
 import io.picnicml.doddlemodel.data.Features
 
-object EmbedSMSDataset extends App {
+object EmbedTextData extends App {
   val (sentences, y) = loadTextDataset()
   val embedder = new UniversalSentenceEncoder()
-  val embeddings =  embedder.embed(sentences)
+
+  val embeddingsBatches = sentences.grouped(4096).map(batch => embedder.embed(batch)).toSeq
+  val embeddings = DenseMatrix.vertcat(embeddingsBatches:_*)
+
   embedder.close()
   println(s"shape of the embeddings matrix: (${embeddings.rows}, ${embeddings.cols})")
   saveDataset(embeddings, y)
@@ -19,11 +22,7 @@ object EmbedSMSDataset extends App {
 
     val accInit = (List[String](), List[Double]())
     val (text, y) = reader.toStream.foldRight(accInit) { case (rowValues, (text, y)) =>
-      (rowValues(1) :: text,
-       rowValues(0).some.map {
-         case "spam" => 1.0
-         case "ham" => 0.0
-       }.getOrElse(Double.NaN) :: y)
+      (rowValues(1) :: text, rowValues(0).toDouble :: y)
     }
 
     reader.close()

@@ -1,4 +1,4 @@
-package io.picnicml.doddlemodel.spamham
+package io.picnicml.doddlemodel.sarcasm
 
 import breeze.linalg.DenseMatrix
 import io.picnicml.doddlemodel.data.Features
