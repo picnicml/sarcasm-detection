@@ -12,7 +12,7 @@ object EmbeddedDataSerialization extends App {
   printDatasetInfo(x, y, featureIndex)
 
   serializeDataset(x, y, featureIndex)
-  val (xLoaded, yLoaded, featureIndexLoaded) = loadSerializedDataset()
+  val (xLoaded, yLoaded, featureIndexLoaded) = loadSerializedDataset(args(1), args(2), args(3))
   printDatasetInfo(xLoaded, yLoaded, featureIndexLoaded)
 
   def loadCsvData(): DatasetWithIndex = {
@@ -37,11 +37,11 @@ object EmbeddedDataSerialization extends App {
     outputStream.close()
   }
 
-  def loadSerializedDataset(): DatasetWithIndex = {
+  def loadSerializedDataset(xPath: String, yPath: String, featureIndexPath: String): DatasetWithIndex = {
     println("Loading serialized data...")
-    val x = loadSerialized[Features](args(1))
-    val y = loadSerialized[Target](args(2))
-    val featureIndex = loadSerialized[FeatureIndex](args(3))
+    val x = loadSerialized[Features](xPath)
+    val y = loadSerialized[Target](yPath)
+    val featureIndex = loadSerialized[FeatureIndex](featureIndexPath)
     (x, y, featureIndex)
   }
 

@@ -1,10 +1,9 @@
 package io.picnicml.examples.sarcasm
 
 import breeze.linalg.sum
-import io.picnicml.doddlemodel.data.CsvLoader.loadCsvDataset
 import io.picnicml.doddlemodel.data.DatasetUtils.{shuffleDataset, splitDataset}
 import io.picnicml.doddlemodel.data.Feature.FeatureIndex
-import io.picnicml.doddlemodel.data.{DatasetWithIndex, Features, Target, TrainTestSplit}
+import io.picnicml.doddlemodel.data.{Features, Target, TrainTestSplit}
 import io.picnicml.doddlemodel.linear.LogisticRegression
 import io.picnicml.doddlemodel.metrics.f1Score
 import io.picnicml.doddlemodel.modelselection.{CrossValidation, HyperparameterSearch, KFoldSplitter}
@@ -12,27 +11,17 @@ import io.picnicml.doddlemodel.pipeline.Pipeline
 import io.picnicml.doddlemodel.pipeline.Pipeline.pipe
 import io.picnicml.doddlemodel.preprocessing.StandardScaler
 import io.picnicml.doddlemodel.syntax.PredictorSyntax._
+import io.picnicml.examples.sarcasm.EmbeddedDataSerialization.{loadSerializedDataset, printDatasetInfo}
 
 object TrainClassifier extends App {
 
-  val (x, y, featureIndex) = loadData()
+  val (x, y, featureIndex) = loadSerializedDataset(args(0), args(1), args(2))
+  printDatasetInfo(x, y, featureIndex)
   val split = shuffleSplitData(x, y)
   val selectedModel = gridSearch(split, featureIndex)
   val score = f1Score(split.yTe, selectedModel.predict(split.xTe))
   println(f"Test F1 score of the selected model: $score%1.4f")
-  selectedModel.save(args(1))
-
-  def loadData(): DatasetWithIndex = {
-    val (dataset, featureIndexOriginal) = loadCsvDataset(args(0))
-    // 'target' is the first column, drop it from features and feature index
-    val (x, y) = (dataset(::, 1 to -1), dataset(::, 0))
-    val featureIndex = featureIndexOriginal.drop(0)
-    println(s"Features: $featureIndex")
-    println(s"Shape of the feature matrix: (${x.rows}, ${x.cols})")
-    println(s"Length of the target vector: (${y.length},)")
-    println(s"Proportion of sarcastic examples: ${sum(y) / x.rows}\n")
-    (x, y, featureIndex)
-  }
+  selectedModel.save(args(3))
 
   def shuffleSplitData(x: Features, y: Target): TrainTestSplit = {
     println("Shuffling and splitting data")
