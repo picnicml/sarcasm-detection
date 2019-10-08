@@ -1,6 +1,4 @@
-package io.picnicml.doddlemodel.sarcasm
-
-import java.io.File
+package io.picnicml.examples.sarcasm
 
 import breeze.linalg.sum
 import io.picnicml.doddlemodel.data.CsvLoader.loadCsvDataset
@@ -25,7 +23,7 @@ object TrainClassifier extends App {
   selectedModel.save(args(1))
 
   def loadData(): DatasetWithIndex = {
-    val (dataset, featureIndexOriginal) = loadCsvDataset(new File(args(0)))
+    val (dataset, featureIndexOriginal) = loadCsvDataset(args(0))
     // 'target' is the first column, drop it from features and feature index
     val (x, y) = (dataset(::, 1 to -1), dataset(::, 0))
     val featureIndex = featureIndexOriginal.drop(0)

@@ -1,4 +1,4 @@
-package io.picnicml.doddlemodel.sarcasm
+package io.picnicml.examples.sarcasm
 
 import breeze.linalg.DenseMatrix
 import io.picnicml.doddlemodel.data.Features

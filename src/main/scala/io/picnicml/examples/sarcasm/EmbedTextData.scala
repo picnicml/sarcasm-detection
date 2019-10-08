@@ -1,4 +1,4 @@
-package io.picnicml.doddlemodel.sarcasm
+package io.picnicml.examples.sarcasm
 
 import com.github.tototoshi.csv.{CSVReader, CSVWriter}
 

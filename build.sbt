@@ -5,4 +5,5 @@ libraryDependencies ++= Seq(
   "io.github.picnicml" %% "doddle-model" % "0.0.1-SNAPSHOT",
   "org.scalanlp" %% "breeze-natives" % "1.0",
   "org.slf4j" % "slf4j-nop" % "1.7.26",
+  "com.github.tototoshi" %% "scala-csv" % "1.3.6",
 )

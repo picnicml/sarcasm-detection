@@ -1,4 +1,4 @@
-package io.picnicml.doddlemodel.sarcasm
+package io.picnicml.examples.sarcasm
 
 import io.picnicml.doddlemodel.loadEstimator
 import io.picnicml.doddlemodel.pipeline.Pipeline

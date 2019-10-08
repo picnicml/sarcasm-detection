@@ -33,6 +33,7 @@ project/project/
 project/plugins/project/
 !lib/*.jar
 
+.DS_Store
 universal_sentence_encoder_large_v3/
 dataset.csv
 logreg.model
