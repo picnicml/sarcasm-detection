@@ -23,10 +23,8 @@ class UniversalSentenceEncoder {
     Tensor.create(sentences.map(_.getBytes("UTF-8")), classOf[String])
 
   private def getEmbeddings(computationResult: Tensor[_], numExamples: Int): Features = {
-    val memory = Array.ofDim[Array[Float]](numExamples)
-    val embeddings = computationResult
-      .copyTo(memory.map(_ => Array.ofDim[Float](EMBEDDINGS_DIM)))
-      .map(_.map(_.toDouble))
+    val memory = Array.ofDim[Array[Float]](numExamples).map(_ => Array.ofDim[Float](EMBEDDINGS_DIM))
+    val embeddings = computationResult.copyTo(memory)
     DenseMatrix(embeddings:_*)
   }
 
