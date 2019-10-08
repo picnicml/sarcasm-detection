@@ -36,5 +36,5 @@ project/plugins/project/
 .DS_Store
 universal_sentence_encoder_large_v3/
 dataset.csv
-logreg.model
+logreg.doddle
 /sarcasm/
