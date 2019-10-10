@@ -8,13 +8,13 @@ import scala.io.StdIn.readLine
 
 object ClassifyDemo extends App {
   val embedder = new UniversalSentenceEncoder()
-  val classifier = loadEstimator[Pipeline]("logreg.model")
+  val classifier = loadEstimator[Pipeline](args(0))
   while(true) {
     val input = readLine("Input your text:  ")
     val yPred = classifier.predict(embedder.embed(Array(input)))
     if (yPred(0) == 1.0)
-      println(s"Text '$input' marked as sarcastic")
+      println(s"Text '$input' marked as SARCASTIC")
     else
-      println(s"Text '$input' marked as non-sarcastic")
+      println(s"Text '$input' marked as REGULAR")
   }
 }
